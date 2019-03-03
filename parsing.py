@@ -70,7 +70,7 @@ class TemperaturePack(Pack):
         self.checksum = None
 
         self.calibrationNTC = {'R_0':33000, 'T_0':298.15, 'R_1': 33000, 'B':5000, 'resolution':12}
-        self.calibrationVBAT = {'multiplier':0.5, 'refrence':2.50}
+        self.calibrationVBAT = {'multiplier':0.5, 'reference':2.50}
 
         self.parse(data)
 
@@ -86,6 +86,7 @@ class TemperaturePack(Pack):
         return (pressureRaw / 100.0) + 750.0
 
     def convertNTC(self, temperature_raw, R_1, resolution, T_0, B, R_0):
+        temperature_raw = max(1, min(temperature_raw, 2**resolution - 1))
         R = R_1 * ((2**resolution) / temperature_raw - 1)
         T = 1/(1/T_0 + 1/B * math.log(R/R_0))
         return T - 273.18
