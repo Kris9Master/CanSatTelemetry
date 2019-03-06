@@ -36,6 +36,18 @@ class HTTPHandler(BaseHTTPRequestHandler):
             content_type = "text/html"
             response_content = open("index.html")
             response_content = response_content.read()
+
+        elif self.path == "/map.html":
+            status = 200
+            content_type = "text/html"
+            with open("map.html") as f:
+                response_content = f.read()
+        elif self.path == "/raw.html":
+            status = 200
+            content_type = "text/html"
+            with open("raw.html") as f:
+                response_content = f.read()
+
         elif self.path == "/data.json" or self.path == "/data":
             status = 200
             content_type = "text/json"
